@@ -1,0 +1,41 @@
+{
+  "name": "random-html",
+  "version": "1.0.0",
+  "description": "生成随机HTML字符串的npm包，支持表单、表格和博客页面",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "jest",
+    "prepublishOnly": "npm test && npm run build",
+    "examples": "ts-node examples/examples.ts"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "random",
+    "html",
+    "generator",
+    "string",
+    "form",
+    "table",
+    "blog",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "random-word-slugs": "^0.1.7"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.11.30",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  }
+}
