@@ -1,6 +1,6 @@
 {
   "name": "random2html",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "生成随机HTML字符串的npm包，支持表单、官网、表格和博客页面",
   "type": "module",
   "main": "dist/index.js",
