@@ -885,7 +885,5 @@ export function generate(userOptions: RandomHTMLOptions = {}): string {
   return result;
 }
 
-// 导出API
-export default {
-  generate
-}; 
+// 导出
+export default { generate }; 
