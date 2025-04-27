@@ -1,5 +1,5 @@
 /**
- * random-html
+ * random2html
  * 生成随机HTML字符串的npm包
  */
 
@@ -21,7 +21,7 @@ export interface RandomHTMLOptions {
   /** 是否包含内联CSS */
   includeCss?: boolean;
   /** 页面类型 */
-  pageType?: 'random' | 'form' | 'table' | 'blog';
+  pageType?: 'random' | 'form' | 'table' | 'blog' | 'website';
 }
 
 /**
@@ -139,21 +139,21 @@ function generateRandomText(wordCount: number = 3): string {
   } catch (error) {
     // 如果random-word-slugs出错，则使用备用方法
     const backupTexts: string[] = [
-      '这是一段示例文本',
-      '随机生成的HTML元素',
-      '点击这里查看更多',
-      '欢迎使用random-html',
-      '这是一个标题',
-      '这是一个段落',
-      '这是一个按钮',
-      '导航链接',
-      '重要信息',
-      '联系我们',
-      '产品介绍',
-      '服务内容',
-      '公司简介',
-      '技术支持',
-      '常见问题'
+      'This is an example text',
+      'Randomly generated HTML element',
+      'Click here to see more',
+      'Welcome to random2html',
+      'This is a heading',
+      'This is a paragraph',
+      'This is a button',
+      'Navigation link',
+      'Important information',
+      'Contact us',
+      'Product introduction',
+      'Service content',
+      'Company profile',
+      'Technical support',
+      'Frequently asked questions'
     ];
     
     // 随机选择并组合文本
@@ -513,7 +513,7 @@ function generateBlogPage(options: Required<RandomHTMLOptions>, usedIds: Set<str
     generateRandomAttributes('div', options.includeCss, usedIds) : '';
   const author = generateRandomText(2);
   const date = new Date().toISOString().split('T')[0];
-  blogContent += `<div class="meta"${metaAttrs ? ' ' + metaAttrs : ''}>作者: ${author} | 发布日期: ${date}</div>\n`;
+  blogContent += `<div class="meta"${metaAttrs ? ' ' + metaAttrs : ''}>Author: ${author} | Published Date: ${date}</div>\n`;
   
   // 文章内容
   const paragraphCount = getRandomInt(3, 7);
@@ -561,6 +561,182 @@ function generateBlogPage(options: Required<RandomHTMLOptions>, usedIds: Set<str
 }
 
 /**
+ * 生成随机官网页面
+ * @param options - 配置选项
+ * @param usedIds - 已使用的ID集合
+ * @returns 生成的官网页面HTML
+ */
+function generateWebsitePage(options: Required<RandomHTMLOptions>, usedIds: Set<string>): string {
+  let websiteContent = '';
+  
+  // 生成导航栏
+  const navAttrs = options.includeAttributes ? 
+    generateRandomAttributes('nav', options.includeCss, usedIds) : '';
+  
+  websiteContent += `<header>\n`;
+  websiteContent += `  <nav${navAttrs ? ' ' + navAttrs : ''}>\n`;
+  websiteContent += `    <div class="logo">\n`;
+  const companyName = generateRandomText(2);
+  websiteContent += `      <h1>${companyName}</h1>\n`;
+  websiteContent += `    </div>\n`;
+  websiteContent += `    <ul class="nav-links">\n`;
+  
+  // 生成导航链接
+  const navItems = ['Home', 'About Us', 'Products', 'Services', 'Contact'];
+  for (let item of navItems) {
+    const liAttrs = options.includeAttributes ? 
+      generateRandomAttributes('li', options.includeCss, usedIds) : '';
+    const aAttrs = options.includeAttributes ? 
+      generateRandomAttributes('a', options.includeCss, usedIds) : '';
+    websiteContent += `      <li${liAttrs ? ' ' + liAttrs : ''}><a href="#${item.toLowerCase().replace(/\s+/g, '-')}"${aAttrs ? ' ' + aAttrs : ''}>${item}</a></li>\n`;
+  }
+  
+  websiteContent += `    </ul>\n`;
+  websiteContent += `  </nav>\n`;
+  websiteContent += `</header>\n\n`;
+  
+  // 生成英雄/横幅区域
+  const heroAttrs = options.includeAttributes ? 
+    generateRandomAttributes('section', options.includeCss, usedIds) : '';
+  const heroTitle = generateRandomText(getRandomInt(3, 5));
+  const heroSubtitle = generateRandomText(getRandomInt(6, 10));
+  
+  websiteContent += `<section class="hero"${heroAttrs ? ' ' + heroAttrs : ''}>\n`;
+  websiteContent += `  <h2>${heroTitle}</h2>\n`;
+  websiteContent += `  <p>${heroSubtitle}</p>\n`;
+  const buttonAttrs = options.includeAttributes ? 
+    generateRandomAttributes('button', options.includeCss, usedIds) : '';
+  websiteContent += `  <button${buttonAttrs ? ' ' + buttonAttrs : ''}>Learn More</button>\n`;
+  websiteContent += `</section>\n\n`;
+  
+  // 生成特色区域
+  websiteContent += `<section class="features">\n`;
+  websiteContent += `  <h2>Our Features</h2>\n`;
+  websiteContent += `  <div class="feature-container">\n`;
+  
+  // 生成3-4个特色项
+  const featureCount = getRandomInt(3, 4);
+  for (let i = 0; i < featureCount; i++) {
+    const featureTitle = generateRandomText(getRandomInt(2, 3));
+    const featureDesc = generateRandomText(getRandomInt(10, 15));
+    const featureAttrs = options.includeAttributes ? 
+      generateRandomAttributes('div', options.includeCss, usedIds) : '';
+    
+    websiteContent += `    <div class="feature"${featureAttrs ? ' ' + featureAttrs : ''}>\n`;
+    websiteContent += `      <div class="feature-icon">🔍</div>\n`;
+    websiteContent += `      <h3>${featureTitle}</h3>\n`;
+    websiteContent += `      <p>${featureDesc}</p>\n`;
+    websiteContent += `    </div>\n`;
+  }
+  
+  websiteContent += `  </div>\n`;
+  websiteContent += `</section>\n\n`;
+  
+  // 生成关于我们区域
+  const aboutAttrs = options.includeAttributes ? 
+    generateRandomAttributes('section', options.includeCss, usedIds) : '';
+  const aboutTitle = "About Us";
+  const aboutContent = generateRandomText(getRandomInt(20, 30));
+  
+  websiteContent += `<section class="about"${aboutAttrs ? ' ' + aboutAttrs : ''}>\n`;
+  websiteContent += `  <h2>${aboutTitle}</h2>\n`;
+  websiteContent += `  <p>${aboutContent}</p>\n`;
+  websiteContent += `</section>\n\n`;
+  
+  // 生成产品/服务区域
+  websiteContent += `<section class="products">\n`;
+  websiteContent += `  <h2>Our Products</h2>\n`;
+  websiteContent += `  <div class="product-container">\n`;
+  
+  // 生成3-6个产品项
+  const productCount = getRandomInt(3, 6);
+  for (let i = 0; i < productCount; i++) {
+    const productTitle = generateRandomText(getRandomInt(2, 3));
+    const productDesc = generateRandomText(getRandomInt(8, 12));
+    const productAttrs = options.includeAttributes ? 
+      generateRandomAttributes('div', options.includeCss, usedIds) : '';
+    
+    websiteContent += `    <div class="product"${productAttrs ? ' ' + productAttrs : ''}>\n`;
+    websiteContent += `      <img src="https://via.placeholder.com/300x200" alt="${productTitle}" />\n`;
+    websiteContent += `      <h3>${productTitle}</h3>\n`;
+    websiteContent += `      <p>${productDesc}</p>\n`;
+    websiteContent += `      <a href="#product-${i}">View Details</a>\n`;
+    websiteContent += `    </div>\n`;
+  }
+  
+  websiteContent += `  </div>\n`;
+  websiteContent += `</section>\n\n`;
+  
+  // 生成联系我们区域
+  const contactAttrs = options.includeAttributes ? 
+    generateRandomAttributes('section', options.includeCss, usedIds) : '';
+  
+  websiteContent += `<section class="contact"${contactAttrs ? ' ' + contactAttrs : ''}>\n`;
+  websiteContent += `  <h2>Contact Us</h2>\n`;
+  websiteContent += `  <div class="contact-container">\n`;
+  websiteContent += `    <div class="contact-info">\n`;
+  websiteContent += `      <p>Phone: 123-456-7890</p>\n`;
+  websiteContent += `      <p>Email: info@${companyName.toLowerCase().replace(/\s+/g, '')}.com</p>\n`;
+  websiteContent += `      <p>Address: ${generateRandomText(5)}</p>\n`;
+  websiteContent += `    </div>\n`;
+  
+  // 简单的联系表单
+  const formAttrs = options.includeAttributes ? 
+    generateRandomAttributes('form', options.includeCss, usedIds) : '';
+  
+  websiteContent += `    <form${formAttrs ? ' ' + formAttrs : ''}>\n`;
+  websiteContent += `      <div class="form-group">\n`;
+  websiteContent += `        <label for="name">Name</label>\n`;
+  websiteContent += `        <input type="text" id="name" name="name" required>\n`;
+  websiteContent += `      </div>\n`;
+  websiteContent += `      <div class="form-group">\n`;
+  websiteContent += `        <label for="email">Email</label>\n`;
+  websiteContent += `        <input type="email" id="email" name="email" required>\n`;
+  websiteContent += `      </div>\n`;
+  websiteContent += `      <div class="form-group">\n`;
+  websiteContent += `        <label for="message">Message</label>\n`;
+  websiteContent += `        <textarea id="message" name="message" rows="4" required></textarea>\n`;
+  websiteContent += `      </div>\n`;
+  websiteContent += `      <button type="submit">Send Message</button>\n`;
+  websiteContent += `    </form>\n`;
+  websiteContent += `  </div>\n`;
+  websiteContent += `</section>\n\n`;
+  
+  // 生成页脚
+  const footerAttrs = options.includeAttributes ? 
+    generateRandomAttributes('footer', options.includeCss, usedIds) : '';
+  
+  websiteContent += `<footer${footerAttrs ? ' ' + footerAttrs : ''}>\n`;
+  websiteContent += `  <div class="footer-content">\n`;
+  websiteContent += `    <div class="footer-logo">\n`;
+  websiteContent += `      <h3>${companyName}</h3>\n`;
+  websiteContent += `    </div>\n`;
+  websiteContent += `    <div class="footer-links">\n`;
+  websiteContent += `      <ul>\n`;
+  
+  // 生成页脚链接
+  for (let item of navItems) {
+    websiteContent += `        <li><a href="#${item.toLowerCase().replace(/\s+/g, '-')}">${item}</a></li>\n`;
+  }
+  
+  websiteContent += `      </ul>\n`;
+  websiteContent += `    </div>\n`;
+  websiteContent += `    <div class="social-links">\n`;
+  websiteContent += `      <a href="#" aria-label="Facebook">📱</a>\n`;
+  websiteContent += `      <a href="#" aria-label="Twitter">📱</a>\n`;
+  websiteContent += `      <a href="#" aria-label="Instagram">📱</a>\n`;
+  websiteContent += `      <a href="#" aria-label="LinkedIn">📱</a>\n`;
+  websiteContent += `    </div>\n`;
+  websiteContent += `  </div>\n`;
+  websiteContent += `  <div class="copyright">\n`;
+  websiteContent += `    <p>&copy; ${new Date().getFullYear()} ${companyName}. All Rights Reserved.</p>\n`;
+  websiteContent += `  </div>\n`;
+  websiteContent += `</footer>\n`;
+  
+  return websiteContent;
+}
+
+/**
  * 生成一个完整的随机HTML字符串
  * @param userOptions - 用户指定的配置选项
  * @returns 生成的HTML字符串
@@ -573,7 +749,7 @@ export function generate(userOptions: RandomHTMLOptions = {}): string {
     depth: 3,
     includeAttributes: true,
     includeCss: true,
-    pageType: 'random' // 'random', 'form', 'table', 'blog'
+    pageType: 'random' // 'random', 'form', 'table', 'blog', 'website'
   };
   
   // 合并用户选项和默认选项
@@ -600,7 +776,7 @@ export function generate(userOptions: RandomHTMLOptions = {}): string {
   // 添加一些基本样式
   if (options.includeCss) {
     result += '  <style>\n';
-    result += '    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }\n';
+    result += '    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; }\n';
     result += '    .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }\n';
     result += '    .form-group { margin-bottom: 15px; }\n';
     result += '    label { display: block; margin-bottom: 5px; }\n';
@@ -613,23 +789,77 @@ export function generate(userOptions: RandomHTMLOptions = {}): string {
     result += '    .meta { color: #666; margin-bottom: 20px; }\n';
     result += '    figure { margin: 20px 0; }\n';
     result += '    figcaption { font-style: italic; text-align: center; }\n';
+    
+    // 添加官网样式
+    if (options.pageType === 'website') {
+      result += '    /* 官网样式 */\n';
+      result += '    header { background-color: #f8f9fa; padding: 20px 0; }\n';
+      result += '    nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 15px; }\n';
+      result += '    .logo h1 { margin: 0; font-size: 24px; }\n';
+      result += '    .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }\n';
+      result += '    .nav-links li { margin-left: 20px; }\n';
+      result += '    .nav-links a { text-decoration: none; color: #333; }\n';
+      result += '    .hero { text-align: center; padding: 80px 20px; background-color: #e9ecef; }\n';
+      result += '    .hero h2 { font-size: 36px; margin-bottom: 20px; }\n';
+      result += '    .hero p { font-size: 18px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }\n';
+      result += '    section { padding: 60px 20px; }\n';
+      result += '    section h2 { text-align: center; margin-bottom: 40px; }\n';
+      result += '    .feature-container, .product-container { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: 0 auto; }\n';
+      result += '    .feature, .product { flex: 0 0 calc(33.333% - 30px); margin-bottom: 30px; padding: 20px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.1); text-align: center; }\n';
+      result += '    .feature-icon { font-size: 36px; margin-bottom: 15px; }\n';
+      result += '    .product img { max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px; }\n';
+      result += '    .about { background-color: #f8f9fa; text-align: center; }\n';
+      result += '    .about p { max-width: 800px; margin: 0 auto; }\n';
+      result += '    .contact-container { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: 0 auto; }\n';
+      result += '    .contact-info, .contact form { flex: 0 0 calc(50% - 30px); }\n';
+      result += '    footer { background-color: #343a40; color: white; padding: 40px 20px 20px; }\n';
+      result += '    .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: 0 auto; margin-bottom: 20px; }\n';
+      result += '    .footer-logo, .footer-links, .social-links { flex: 1; margin-bottom: 20px; }\n';
+      result += '    .footer-links ul { list-style: none; padding: 0; }\n';
+      result += '    .footer-links li { margin-bottom: 10px; }\n';
+      result += '    .footer-links a { color: white; text-decoration: none; }\n';
+      result += '    .social-links a { color: white; font-size: 20px; margin-right: 10px; text-decoration: none; }\n';
+      result += '    .copyright { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); max-width: 1200px; margin: 0 auto; }\n';
+      result += '    /* 响应式设计 */\n';
+      result += '    @media (max-width: 768px) {\n';
+      result += '      .feature, .product { flex: 0 0 calc(50% - 20px); }\n';
+      result += '      .contact-info, .contact form { flex: 0 0 100%; }\n';
+      result += '    }\n';
+      result += '    @media (max-width: 480px) {\n';
+      result += '      .feature, .product { flex: 0 0 100%; }\n';
+      result += '      nav { flex-direction: column; }\n';
+      result += '      .nav-links { margin-top: 20px; }\n';
+      result += '      .nav-links li { margin: 0 10px; }\n';
+      result += '    }\n';
+    }
+    
     result += '  </style>\n';
   }
   
-  result += '</head>\n<body>\n<div class="container">\n';
+  result += '</head>\n<body>\n';
   
   // 根据页面类型生成不同的内容
   if (options.pageType === 'form') {
     // 生成表单页面
+    result += '<div class="container">\n';
     result += generateRandomForm(options, usedIds);
+    result += '</div>\n';
   } else if (options.pageType === 'table') {
     // 生成表格页面
+    result += '<div class="container">\n';
     result += generateRandomTable(options, usedIds);
+    result += '</div>\n';
   } else if (options.pageType === 'blog') {
     // 生成博客页面
+    result += '<div class="container">\n';
     result += generateBlogPage(options, usedIds);
+    result += '</div>\n';
+  } else if (options.pageType === 'website') {
+    // 生成官网页面
+    result += generateWebsitePage(options, usedIds);
   } else {
     // 生成随机页面
+    result += '<div class="container">\n';
     // 生成多个顶级元素，直到达到指定的元素数量
     while (elementsGenerated < elementsToGenerate) {
       const { html, elementsUsed } = generateRandomElement(
@@ -647,9 +877,10 @@ export function generate(userOptions: RandomHTMLOptions = {}): string {
         break;
       }
     }
+    result += '</div>\n';
   }
   
-  result += '</div>\n</body>\n</html>';
+  result += '</body>\n</html>';
   
   return result;
 }

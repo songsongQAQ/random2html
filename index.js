@@ -1,5 +1,5 @@
 /**
- * random-html
+ * random2html
  * 生成随机HTML字符串的npm包
  */
 
@@ -103,7 +103,7 @@ function generateRandomText(wordCount = 3) {
       '这是一段示例文本',
       '随机生成的HTML元素',
       '点击这里查看更多',
-      '欢迎使用random-html',
+      '欢迎使用random2html',
       '这是一个标题',
       '这是一个段落',
       '这是一个按钮',
