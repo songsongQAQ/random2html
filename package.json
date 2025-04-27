@@ -1,6 +1,6 @@
 {
-  "name": "random-html",
-  "version": "1.0.0",
+  "name": "random-html2",
+  "version": "1.0.1",
   "description": "生成随机HTML字符串的npm包，支持表单、表格和博客页面",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,8 +25,16 @@
     "blog",
     "typescript"
   ],
-  "author": "",
+  "author": "songsongQAQ (https://github.com/songsongQAQ/random-html)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/songsongQAQ/random-html.git"
+  },
+  "homepage": "https://github.com/songsongQAQ/random-html",
+  "bugs": {
+    "url": "https://github.com/songsongQAQ/random-html/issues"
+  },
   "dependencies": {
     "random-word-slugs": "^0.1.7"
   },
