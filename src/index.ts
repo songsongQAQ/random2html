@@ -885,5 +885,5 @@ export function generate(userOptions: RandomHTMLOptions = {}): string {
   return result;
 }
 
-// 导出
+// ES模块默认导出
 export default { generate }; 

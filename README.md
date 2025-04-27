@@ -15,10 +15,13 @@ npm install random2html
 
 ### 使用方法
 
+> **注意**: 从最新版本开始，random2html 只支持 ES 模块导入 (import)，不再支持 CommonJS 的 require 导入方式。
+
 #### JavaScript
 
 ```javascript
-const randomHTML = require('random2html');
+// 注意: random2html 只支持 ES 模块导入
+import randomHTML from 'random2html';
 
 // 生成默认随机HTML
 const html = randomHTML.generate();
@@ -195,7 +198,7 @@ console.log(websiteHTML);
 
 ```typescript
 import randomHTML from 'random2html';
-import * as fs from 'fs';
+import fs from 'fs/promises';
 
 // 生成博客页面
 const blogHTML = randomHTML.generate({
@@ -203,8 +206,10 @@ const blogHTML = randomHTML.generate({
 });
 
 // 保存到文件
-fs.writeFileSync('blog.html', blogHTML);
-console.log('已保存到 blog.html');
+(async () => {
+  await fs.writeFile('blog.html', blogHTML);
+  console.log('已保存到 blog.html');
+})();
 ```
 
 ### 开发
@@ -242,10 +247,13 @@ npm install random2html
 
 ### Usage
 
+> **Note**: Starting from the latest version, random2html only supports ES module imports (import) and no longer supports CommonJS require imports.
+
 #### JavaScript
 
 ```javascript
-const randomHTML = require('random2html');
+// Note: random2html only supports ES module imports
+import randomHTML from 'random2html';
 
 // Generate default random HTML
 const html = randomHTML.generate();
@@ -422,7 +430,7 @@ console.log(websiteHTML);
 
 ```typescript
 import randomHTML from 'random2html';
-import * as fs from 'fs';
+import fs from 'fs/promises';
 
 // Generate a blog page
 const blogHTML = randomHTML.generate({
@@ -430,8 +438,10 @@ const blogHTML = randomHTML.generate({
 });
 
 // Save to file
-fs.writeFileSync('blog.html', blogHTML);
-console.log('Saved to blog.html');
+(async () => {
+  await fs.writeFile('blog.html', blogHTML);
+  console.log('Saved to blog.html');
+})();
 ```
 
 ### Development
